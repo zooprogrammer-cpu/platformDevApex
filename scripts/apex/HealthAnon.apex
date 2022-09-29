@@ -1,5 +1,5 @@
-HealthCalculator ashHealth = new HealthCalculator();
-Decimal ashBMI = ashHealth.calculateBMI(160, 6);
+//HealthCalculator ashHealth = new HealthCalculator();
+Decimal ashBMI = HealthCalculator.calculateBMI(160, 6);
 System.debug('Ash BMI is: ' + ashBMI);
-Decimal ashPace = ashHealth.calculatePace(200, 80);
+Decimal ashPace = HealthCalculator.calculatePace(200, 80);
 System.debug('Ash Pace is: ' + ashPace);
