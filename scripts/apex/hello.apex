@@ -13,8 +13,7 @@ System.debug('My name is ' + tempvar);
 HelloWorld firstClass = new HelloWorld();
 firstClass.printMessage('Testing from VSCode');
 
-System.debug(firstClass.getDay(0));
-System.debug(firstClass.getDay(1));
-System.debug(firstClass.getDay(6));
-System.debug(firstClass.getDay(10));
+System.debug(firstClass.getDay('SUN'));
+System.debug(firstClass.getDay('TUE'));
+System.debug(firstClass.getDay('FRI'));
 

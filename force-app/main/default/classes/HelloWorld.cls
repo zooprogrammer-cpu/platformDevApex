@@ -33,4 +33,35 @@ public class HelloWorld {
     }
     return dayString;
   }
+
+  public String getDay(String dayAbbreviation){
+    String dayString = '';
+    switch on dayAbbreviation {
+      when 'SUN' {
+        dayString = 'Sunday';
+      }
+      when 'MON' {
+        dayString = 'Monday';
+      }
+      when 'TUE' {
+        dayString = 'Tuesday';
+      }
+      when 'WED' {
+        dayString = 'Wednesday';
+      }
+      when 'THU' {
+        dayString = 'Thursday';
+      }
+      when 'FRI' {
+        dayString = 'Friday';
+      }
+      when 'SAT' {
+        dayString = 'Saturday';
+      }
+      when else {
+        dayString = 'Invalid day number'; 
+      }
+    }
+    return dayString;
+  }
 }
