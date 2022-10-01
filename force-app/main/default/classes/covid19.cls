@@ -1,16 +1,10 @@
 public class covid19 {
   public Integer recoveredInArea = 0;
   public static Integer recoveredInCountry = 0;
-  
-  public covid19(){
-    System.debug('Constructor is called');
-  }
 
-
-  public covid19(Integer recoveredInArea){
-    this(); 
-    this.recoveredInArea = recoveredInArea;
-    recoveredInCountry = recoveredInArea;  
+  {
+    recoveredInArea = 10;
+    recoveredInCountry = 15;
   }
 
   public void treatPatient() {
@@ -18,8 +12,7 @@ public class covid19 {
     recoveredInCountry++;
   }
 
-
   public static void printTreated() {
-    System.debug('Recovered in country: '+ recoveredInCountry);
+    System.debug('Recovered in country: ' + recoveredInCountry);
   }
 }
