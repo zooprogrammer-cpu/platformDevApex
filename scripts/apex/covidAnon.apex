@@ -1,4 +1,4 @@
-covid19 dubuque = new covid19(); 
+covid19 dubuque = new covid19(5); 
 
-dubuque.treatPatient();
+System.debug('Recovered in Dubuque: ' + dubuque.recoveredInArea);
 covid19.printTreated();

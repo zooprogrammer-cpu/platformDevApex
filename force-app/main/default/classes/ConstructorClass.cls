@@ -10,8 +10,8 @@ public with sharing class ConstructorClass {
     // another constructor but with Integer as a parameter
     public ConstructorClass(Integer patientsRecovered){
         System.debug('Second constructor is called');
-        recoveredInArea = patientsRecovered;
-        recoveredInCountry = patientsRecovered;
+        recoveredInArea = recoveredInArea;
+        recoveredInCountry = recoveredInArea;
     }
   
     public void treatPatient() {
