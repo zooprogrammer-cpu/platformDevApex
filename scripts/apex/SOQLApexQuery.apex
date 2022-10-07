@@ -1,19 +1,20 @@
-List<String> accountNames = new List<String>();
-accountNames.add('sForce');
-accountNames.add('University of Arizona');
+String accountClass = 'Class2';
 
-List<Account> accounts = [SELECT Id,Name,Rating FROM Account 
-                          WHERE Name IN ('sForce', 'University of Arizona')];
+String queryString = 'SELECT Id, Name, Phone, Rating FROM Account';
 
-// List<Account> accounts = [SELECT Id,Name,Rating FROM Account 
-// WHERE Name IN ('University of Arizona')];
+if(accountClass == 'Class1'){
+    queryString += ' WHERE Rating = \'Hot\' AND Type = \'Prospect\'';
+}
+else if (accountClass == 'Class2'){
+     queryString += ' WHERE Rating = \'Warm\' AND Type = \'Other\'';
+} else{
+     queryString += ' WHERE Rating = \'Hot\'';
+}
 
-//Instead of repeating the code like above with each account name, 
-//Bind variables lets us use the accountNames variable in Apex
-
-// List<Account> accounts = [SELECT Id,Name,Rating FROM Account 
-//                           WHERE Name IN:accountNames];
-
+List<Account> accounts = Database.query(queryString);
+System.debug('Accounts ' + accounts);
 System.debug('Account Size: ' + accounts.size());
+
+
 
 
