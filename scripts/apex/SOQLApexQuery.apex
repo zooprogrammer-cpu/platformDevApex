@@ -18,12 +18,12 @@ opp.StageName = 'Closed Won';
 update opp; 
 
 // get opp to delete
-Opportunity opp = [SELECT Id FROM Opportunity WHERE Name = 'Lord of the Rings' LIMIT 1];
-delete opp; 
+// Opportunity opp = [SELECT Id FROM Opportunity WHERE Name = 'Lord of the Rings' LIMIT 1];
+// delete opp; 
 
 //undelete the opp
 //this is not working- 
-List <Opportunity> deletedOpps = [SELECT Id FROM Opportunity WHERE isDeleted = TRUE ALL ROWS];
+//List <Opportunity> deletedOpps = [SELECT Id FROM Opportunity WHERE isDeleted = TRUE ALL ROWS];
 
 // undelete the list of records
-undelete deletedOpps;
+//undelete deletedOpps;
