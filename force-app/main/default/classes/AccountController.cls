@@ -71,4 +71,50 @@ public class AccountController {
     //OR
     Database.update(accounts, true);
   }
+
+  //Bulkification challenge
+  public static void updateAvgCaseResolutionDays(List<Id> accIds) {
+    List<Account> accs = [SELECT Id, Name FROM Account WHERE Id IN :accIds];
+
+    // Make new maps to store total cases and total days for each account
+    Map<Id, Integer> accountTotalCaseMap = new Map<Id, Integer>();
+    Map<Id, Integer> accountTotalCaseDaysMap = new Map<Id, Integer>();
+
+    Integer totalDays = 1, totalCases = 1;
+    // retrive all the cases for this account
+    // get resolution days for each account (ClosedDate - CreatedDate)
+    for (Case caseObj : [
+      SELECT Id, CreatedDate, ClosedDate, AccountId
+      FROM Case
+      WHERE IsClosed = TRUE AND AccountId IN :accIds
+    ]) {
+      // if map does not have current account id, then add it
+      if (!accountTotalCaseMap.containsKey(caseObj.AccountId)){
+        accountTotalCaseMap.put(caseObj.AccountId, 0);
+        accountTotalCaseDaysMap.put(caseObj.AccountId, 0);  
+      }
+      //get total number of cases for the map
+      Integer totalCases = accountTotalCaseMap.get(caseObj.AccountId);
+      //increment count
+      totalCases++;
+      accountTotalCaseMap.put(caseObj.AccountId, totalCases);
+      // get duration in days and add it to totalDays
+      Integer totalDays = accountTotalCaseDaysMap.get(caseObj.AccountId);
+      totalDays += caseObj.CreatedDate.date()
+        .daysBetween(caseObj.ClosedDate.date());
+      accountTotalCaseDaysMap.put(caseObj.AccountId, totalDays + caseObj.CreatedDate.date().daysBetween(caseObj.ClosedDate.date()));
+    }
+
+    //list of accounts to update
+    List <Account> accountToUpdate = new List<Account>();
+    for (Id accountId: accountTotalCaseMap){
+      Decimal resolutionDays = accountTotalCaseDaysMap.get(accountId) / accountTotalCaseMap.get(accountId);
+      //update account Object
+      accountToUpdate.add(new Account(Id= accountId, Avg_Case_Resolution_Days__c = resolutionDays));
+
+    }
+
+    // update account objects
+    update accountToUpdate;
+  }
 }
