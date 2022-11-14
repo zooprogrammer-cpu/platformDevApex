@@ -27,3 +27,10 @@ update opp;
 
 // undelete the list of records
 //undelete deletedOpps;
+
+
+AggregateResult[] groupedResult = [SELECT StageName, MAX(Amount), MIN(Amount), AVG(Amount) FROM Opportunity GROUP BY StageName];
+
+for (AggregateResult result: groupedResult){
+    System.debug('StageName: ' + result.get('StageName') + result.get('expr0') + 'Min Amount: ' + result.get('expr1') + 'Avg Amount' + result.get('expr2'));
+}

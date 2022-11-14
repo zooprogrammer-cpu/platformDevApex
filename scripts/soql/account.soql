@@ -4,3 +4,20 @@
 //     SFDX: Execute SOQL Query with Currently Selected Text
 
 SELECT Account.Name,Name, Department, Title,(SELECT CaseNumber,Subject FROM Cases) FROM Contact 
+
+SELECT LeadSource, COUNT(Id) FROM Lead GROUP BY LeadSource
+
+SELECT StageName,MAX(AMOUNT) FROM Opportunity GROUP BY StageName
+
+SELECT Count(Id), LeadSource, StageName FROM Opportunity GROUP BY StageName, LeadSource
+
+
+SELECT StageName, SUM(Amount) FROM Opportunity 
+GROUP BY StageName HAVING SUM(Amount)>500000
+
+
+AggregateResult[] groupedResult =   [SELECT StageName, MAX(Amount), MIN(Amount), AVG(Amount) FROM Opportunity GROUP BY StageName]
+
+for (AggregeateResult result: groupedResult){
+    System.debug('StageName: ' + result.get('StageName') + result.get('expr0') + 'Min Amount: ' + result.get('expr1') + 'Avg Amount' + result.get('expr2'))
+}

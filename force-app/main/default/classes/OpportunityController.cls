@@ -1,5 +1,8 @@
 public with sharing class OpportunityController {
   public static void updateProfileValue(List<Id> oppIds) {
+    // List<Opportunity> oppLessThan10k = new List<Opportunity>();
+    // List<Opportunity> oppMoreThan10kLessThan50k = new List<Opportunity>();
+    // List<Opportunity> oppMoreThan50k = new List<Opportunity>();
 
     List<Opportunity> opps = [
       SELECT Id, Amount, Profile__c

@@ -6,7 +6,5 @@ public class LeadQueueable implements Queueable {
       record.LeadSource = 'Web';
     }
     update existingRecords;
-
-    //can also call another queueable class
   }
 }

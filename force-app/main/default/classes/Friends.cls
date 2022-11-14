@@ -4,9 +4,9 @@ public with sharing class Friends {
   final Integer MORE_THAN_THREE_SLICES = 6;
 
   public Integer getBill(Integer numberOfSlices) {
-    Integer billAmount = numberOfSlices == 1 ? (ONE_SLICE * numberOfSlices) :
+    Integer billToPay = numberOfSlices == 1 ? (ONE_SLICE * numberOfSlices) :
                         numberOfSlices <= 3 ? (UPTO_THREE_SLICES * numberOfSlices) : 
                             (MORE_THAN_THREE_SLICES * numberOfSlices);
-    return billAmount;
+    return billToPay;
   }
 }
