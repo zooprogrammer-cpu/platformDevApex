@@ -82,4 +82,8 @@ public with sharing class BasicApexScenarios {
 
     System.debug('This is coming from platfomrDevX14 Branch');
   }
+
+  public static void testBranch() {
+    System.debug('Testing this branch');  
+  }
 }
