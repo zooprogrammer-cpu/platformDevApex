@@ -80,4 +80,8 @@ public with sharing class BasicApexScenarios {
         break; 
     }
   }
+
+  public static void testBranch() {
+    System.debug('Testing this branch');  
+  }
 }
