@@ -55,8 +55,8 @@ public class SoqlExample {
     return contacts;
   }
 
-  // parent reference in bind variable
-  public static List<Account> parentRecorReferenceDynamic(
+  // parent reference with bind variable
+  public static List<Account> parentRecordReference(
     Account childAccount
   ) {
     List<Account> accounts = [
@@ -67,7 +67,7 @@ public class SoqlExample {
     return accounts;
   }
 
-  //cannot use dynamic query with parent reference dot notation
+  //problematic dynamic query -cannot use dynamic query with parent reference dot notation
   public static List<Account> parentRecordReferenceDynamic(
     Account childAccount
   ) {
@@ -77,10 +77,14 @@ public class SoqlExample {
       ' FROM Account ' +
       ' WHERE AnnualRevenue >= :childAccount.Id';
     accounts = Database.query(query);
+    System.debug(accounts);
     return accounts;
   }
 
   //anonymous apex to run above
-  //List<Account> children = [SELECT Id FROM Account WHERE ParenId != null]
-  //test
+  // List<Account> children = [SELECT Id FROM Account WHERE ParentId != null];
+  // System.debug(children);
+  // if (!children.isEmpty()) {
+  // List<Account> result = SoqlExample.parentRecordReference(children[0]);
+  // }
 }

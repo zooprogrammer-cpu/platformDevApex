@@ -7,6 +7,6 @@
   ],
   "name": "platformDevApex",
   "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sfdcLoginUrl": "https://ashlearncode2-dev-ed.my.salesforce.com",
   "sourceApiVersion": "55.0"
 }
