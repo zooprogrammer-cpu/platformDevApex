@@ -56,9 +56,7 @@ public class SoqlExample {
   }
 
   // parent reference with bind variable
-  public static List<Account> parentRecordReference(
-    Account childAccount
-  ) {
+  public static List<Account> parentRecordReference(Account childAccount) {
     List<Account> accounts = [
       SELECT Name
       FROM Account
@@ -72,19 +70,31 @@ public class SoqlExample {
     Account childAccount
   ) {
     List<Account> accounts;
+    String childAccountId = childAccount.Id;
     String query =
-      'SELECT Id ' +
+      'SELECT Name ' +
       ' FROM Account ' +
-      ' WHERE AnnualRevenue >= :childAccount.Id';
+      ' WHERE Id = :childAccountId';
     accounts = Database.query(query);
     System.debug(accounts);
     return accounts;
   }
 
-  //anonymous apex to run above
-  // List<Account> children = [SELECT Id FROM Account WHERE ParentId != null];
-  // System.debug(children);
-  // if (!children.isEmpty()) {
-  // List<Account> result = SoqlExample.parentRecordReference(children[0]);
-  // }
+  // dangerous way to retrieve records
+  public static Account dangerousQuery() {
+    Account dangerHere = [SELECT Id, Name FROM Account WHERE Name LIKE 'United%'];
+    return dangerHere;
+  }
+
+
 }
+
+//anonymous apex to run above parentRecordReference and parentRecordReferenceDynamic 
+// List<Account> children = [SELECT Id FROM Account WHERE ParentId != null];
+// System.debug(children);
+// if (!children.isEmpty()) {
+// //List<Account> result = SoqlExample.parentRecordReference(children[0]); //this works
+// List<Account> result = SoqlExample.parentRecordReferenceDynamic(children[0]); // this does not work since the method uses dynamic query with dot notation
+// System.debug('Result: ' + result);
+// }
+
