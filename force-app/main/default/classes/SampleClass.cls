@@ -1,31 +1,30 @@
 public with sharing class SampleClass {
-    public static Integer instanceCount; 
-    // by default access modifier is private. Can inly be accessed inside the class
-    // If System.debug(SampleClass.mySecret), then you get an error Variable is not visible
-    public static String mySecret = 'Classified'; 
-    public static final String NEVER_CHANGES = 'This cannot change'; 
-    Integer myInt = 5; 
-    String myString = 'Ash'; 
-    Boolean myBool = TRUE; 
-  
+    public static Integer instanceCount = 0; 
+    Integer myInt; 
+    String myString; 
+    Boolean myBool;
 
-    public static String sayHello(String firstName) {
-        return 'Hello' + firstName; 
+    // this is the constructor that accepts three arguements
+    public SampleClass(Integer j, String str, Boolean bool){
+        System.debug('3-arguement constructor finished');
+        // the passed varaibles in this constructor class will be assigned 
+        // to the private variables. take my copy of myBool and sets it to bool
+        // notice instanceCount does  not have a this since static variable 
+        // is shared across all instanced
+        this.myBool = bool;
+        this.myString = str;
+        this.myInt = j;
+        instanceCount ++;
     }
 
-    // Can reuse method name if the types of argeuements are different 
-    // or no. of  arguements are different.
-    // Can even have a different return type 
-    public static String sayHello(String name1, String name2) {
-        return 'Hello' + name1 + ' and ' + name2;
+    // constructor clss with two values
+    public SampleClass(Integer j, String str){
+        this(j,str,null); //must be first line of constructor
+        System.debug('2-arguement constructor finished');
     }
 
-    public static String sayHello() {
-        return sayHello('there');    
+    //constructor class with no values
+    public SampleClass(){
+        System.debug('No arguement constructor finished');
     }
-
-    public void showResults() {
-        System.debug(myInt + myString + myBool);
-    }
- 
 }
