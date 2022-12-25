@@ -41,3 +41,11 @@ student2.displayInfo();
 Student student3 = new Student();
 student3.displayInfo();
 
+EmployeeExample emp1 = new EmployeeExample('Ash', 20, 200000);
+emp1.display(); 
+
+EmployeeExample emp2 = new EmployeeExample(); 
+emp2.display();
+
+EmployeeExample emp3 = new EmployeeExample('Dug', 4);
+emp3.display(); 
