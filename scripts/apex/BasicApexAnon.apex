@@ -29,3 +29,15 @@ System.debug('The sum is: ' + calc1.addition(3,5));
 System.debug('The multiplied value is: ' + calc1.multiplication(2,7));
 
 System.debug('The addition of three numbers are: ' + calc1.addition(3, 4, 5));
+
+// invoking the user defined constructor with arguements
+Student student1 = new Student('Jacob', 'St. Xavier\'s');
+student1.displayInfo();
+
+Student student2 = new Student ('Ash', 'St. Xavier\'s');
+student2.displayInfo();
+
+// invoking the no arguement constructor
+Student student3 = new Student();
+student3.displayInfo();
+
