@@ -20,3 +20,12 @@ CarExample carObj2 = new CarExample();
 carObj2.model = 'Audi';
 carObj2.speed = 78;
 carObj2.displayCarInfo();
+
+
+Calculator calc1 = new Calculator();
+
+System.debug('The sum is: ' + calc1.addition(3,5));
+
+System.debug('The multiplied value is: ' + calc1.multiplication(2,7));
+
+System.debug('The addition of three numbers are: ' + calc1.addition(3, 4, 5));
