@@ -56,4 +56,9 @@ method1.nonStaticMethod();
 
 StaticAndNonStaticMethodExample.staticMethod();
 
-
+StaticAndNonStaticVariableExample obj1 = new StaticAndNonStaticVariableExample();
+obj1.num1 = 5;
+//obj1.num2 =8; // static field cannot be referenced from a non static context
+StaticAndNonStaticVariableExample.num2 = 8; //static variable can bce called from the class directly
+obj1.increment();
+obj1.display();
