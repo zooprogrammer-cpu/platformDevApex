@@ -62,3 +62,17 @@ obj1.num1 = 5;
 StaticAndNonStaticVariableExample.num2 = 8; //static variable can bce called from the class directly
 obj1.increment();
 obj1.display();
+
+Teacher teach1 = new Teacher();
+teach1.name = 'Joseph';
+teach1.age = 70;
+Teacher.schoolName = 'Ideal Model School';
+
+
+Teacher teach2 = new Teacher();
+teach2.name = 'Francis';
+teach2.age = 50;
+Teacher.schoolName = 'Little Angeles SChool';
+
+teach1.display();
+teach2.display();
