@@ -49,3 +49,11 @@ emp2.display();
 
 EmployeeExample emp3 = new EmployeeExample('Dug', 4);
 emp3.display(); 
+
+
+StaticAndNonStaticMethodExample method1 = new StaticAndNonStaticMethodExample();
+method1.nonStaticMethod();
+
+StaticAndNonStaticMethodExample.staticMethod();
+
+
