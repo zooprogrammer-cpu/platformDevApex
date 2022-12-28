@@ -113,9 +113,25 @@ accUti3.updateAccount('Ash Consulting');
 AccountUtility accUti4 = new AccountUtility();
 accUti4.deleteAccounts('Real Estate');
 
-Account acc1 = new Account(Name= 'Dinos LLC', BillingCity = 'Dubuque');
+Account acc1 = new Account(Name= 'Lucky Dog LLC', BillingCity = 'Madison');
 Account acc2 = new Account(BillingCity = 'Madison');
 List<Account> listAccounts = new List<Account>();
 listAccounts.add(acc1);
 listAccounts.add(acc2);
-Database.insert(listAccounts, false);
+Database.SaveResult[] srList = Database.insert(listAccounts, false);
+
+for (Database.SaveResult sr : srList) {
+    if (sr.isSuccess()) {
+        //operation was successful, so get the success results ID
+        System.debug('Succefully inserted account: ' + sr.getId());    
+    }
+    else {
+        //operation failed. so get all errors
+        for (Database.Error err : sr.getErrors()) {
+            System.debug('The following errors have occurred');
+            System.debug(err.getStatusCode() + ':' + err.getMessage());
+            System.debug('Account fields that affected this error: ' + err.getFields());
+        }
+    }
+    
+}
