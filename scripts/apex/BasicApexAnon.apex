@@ -112,3 +112,10 @@ accUti3.updateAccount('Ash Consulting');
 
 AccountUtility accUti4 = new AccountUtility();
 accUti4.deleteAccounts('Real Estate');
+
+Account acc1 = new Account(Name= 'Dinos LLC', BillingCity = 'Dubuque');
+Account acc2 = new Account(BillingCity = 'Madison');
+List<Account> listAccounts = new List<Account>();
+listAccounts.add(acc1);
+listAccounts.add(acc2);
+Database.insert(listAccounts, false);
