@@ -76,3 +76,39 @@ Teacher.schoolName = 'Little Angeles SChool';
 
 teach1.display();
 teach2.display();
+
+List<SObject> Objects = new List<SObject>();
+Account acc = new Account(Name= 'Ash Consulting');
+Contact con = new Contact(FirstName = 'Dug', LastName = 'Basnyat');
+Objects.add(acc);
+Objects.add(con);
+System.debug('The list of Records are: ' + Objects);
+
+List<List<SObject>> searchList = [FIND'Basnyat' IN ALL FIELDS
+                                      RETURNING Account(Name), Contact(FirstName,LastName)];
+System.debug(searchList); 
+
+Account acc1 = new Account(Name = 'Madison Public Library');
+insert acc1; 
+
+
+List<Account> accs = [SELECT Id FROM Account WHERE Name LIKE 'United%'];
+List<Account> accountsToUpdate = new List<Account>();
+for (Account acc : accs) {
+    acc.Industry = 'Finance'; 
+    accountsToUpdate.add(acc);   
+}
+update accountsToUpdate; 
+
+
+AccountUtility accUti = new AccountUtility();
+accUti.createSingleAccount('New Hamption Inc', 'Malibu');
+
+AccountUtility accUti2 = new AccountUtility(); 
+accUti2.createMultipleAccounts(5, 'Real Estate Account ');
+
+AccountUtility accUti3 = new AccountUtility();
+accUti3.updateAccount('Ash Consulting');
+
+AccountUtility accUti4 = new AccountUtility();
+accUti4.deleteAccounts('Real Estate');
