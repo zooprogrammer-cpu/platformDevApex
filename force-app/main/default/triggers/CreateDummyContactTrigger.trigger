@@ -13,7 +13,6 @@ trigger CreateDummyContactTrigger on Account (after insert, before delete) {
 
     else if (Trigger.isBefore){
         if (Trigger.isDelete) {
-            List <Account> accList = new List<Account>();
             Set<Id> acctIdSet = new Set<Id>();  
             //Bulkify trigger - when multiple accounts are being deleted at same time, 
             //Trigger.old gives all accounts that are being deleted 
@@ -22,13 +21,15 @@ trigger CreateDummyContactTrigger on Account (after insert, before delete) {
                 acctIdSet.add(acc.Id);     
             } 
             // get all account and contacts using parent to child inner query where Account Id is avaailable in the set
-            // put them in a map variable
+            // put the result of this into a variable of variable
             Map<Id, Account> accts = new Map<Id, Account>([SELECT Id, Name, (SELECT Id FROM Contacts ) 
                                                         FROM Account WHERE Id IN: acctIdSet]);
-                                                        
+            for (Account acc : Trigger.old) {
+                if(accts.get(acc.id).Contacts.size() > 0){
+                    acc.addError('Account cannot be deleted since it has contacts associated with it. ');
+                } 
+            }                                                                                         
         }
-
     }
   
-
 }
