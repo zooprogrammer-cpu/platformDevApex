@@ -138,3 +138,5 @@ for (Database.SaveResult sr : srList) {
 
 
 Database.executeBatch(new AccountUpdateNullValuesBatch(),10);
+
+Database.executeBatch(new StatefulBatchApex(),10);
