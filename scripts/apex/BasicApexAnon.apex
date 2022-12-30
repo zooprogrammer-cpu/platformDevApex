@@ -135,3 +135,6 @@ for (Database.SaveResult sr : srList) {
     }
     
 }
+
+
+Database.executeBatch(new AccountUpdateNullValuesBatch(),10);
