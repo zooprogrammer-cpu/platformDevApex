@@ -1,4 +1,4 @@
-trigger CreateDummyContactTrigger on Account (after insert, before delete) {
+trigger CreateDummyContactTrigger on Account (after insert, before insert, before delete) {
     if (Trigger.isAfter && Trigger.isInsert) {
         List<Contact> contactList = new List<Contact>();
         for (Account acc : Trigger.new) {
@@ -30,6 +30,22 @@ trigger CreateDummyContactTrigger on Account (after insert, before delete) {
                 } 
             }                                                                                         
         }
+
+        else if (Trigger.isInsert){
+            for (Account acc : Trigger.new) {
+                if (String.isBlank(acc.BillingCity)) {
+                    acc.BillingCity = 'Madison';    
+                }
+                if (String.isBlank(acc.BillingState)) {
+                    acc.BillingState = 'WI';    
+                }
+                if (String.isBlank(acc.BillingCountry)) {
+                    acc.BillingCountry = 'US';    
+                }
+                if (String.isBlank(acc.AccountNumber)) {
+                    acc.AccountNumber = 'YYYYYY';    
+                }
+            }
+        }
     }
-  
 }
