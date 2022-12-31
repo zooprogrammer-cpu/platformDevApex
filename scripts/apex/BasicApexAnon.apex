@@ -220,3 +220,5 @@ catch(DmlException e){
 }
 
 AcctUtility.mainProcessing(); 
+
+System.debug(TemperatureConverter.convertFahrenheitToCelsius(70));
