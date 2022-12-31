@@ -10,6 +10,7 @@ public with sharing class TaskUtility {
         else{
             taskPriority = 'Normal';
         }
+        System.debug('The Task Priority is: ' + taskPriority);
         return taskPriority;
     }
   }
