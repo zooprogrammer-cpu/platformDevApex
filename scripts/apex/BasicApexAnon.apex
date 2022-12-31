@@ -140,3 +140,83 @@ for (Database.SaveResult sr : srList) {
 Database.executeBatch(new AccountUpdateNullValuesBatch(),10);
 
 Database.executeBatch(new StatefulBatchApex(),10);
+
+try{
+Lead lead1 = new Lead(LeadSource = 'Phone', FirstName = 'John', LastName = 'Hamm');
+System.debug('Trying to insert a lead');
+insert lead1; 
+}
+catch(DmlException e){
+System.debug('Error occurred'+ e.getMessage());
+}
+
+Integer firstElem;
+Integer fourthElem;
+try{
+    List<Integer> li = new List<Integer>();
+    li.add(15);
+    li.add(6);
+    firstElem = li[0];
+	fourthElem = li[3];
+}
+catch(ListException e){
+    System.debug('List exception occurred: ' + e);
+}
+
+System.debug('Element at index 0: ' + firstElem);
+
+
+String s; // the value of s is null here
+Boolean v;
+
+try{
+   v = s.contains('ABC');
+   System.debug('Does the string contain ABC? ' + v);
+
+}
+catch(NullPointerException e){
+    System.debug('Exception occurred: ' + e.getMessage());
+}
+
+
+Account v; 
+try{
+Account acc = new Account(Name = 'ABC Corp');
+insert acc; 
+v = [SELECT Id, Name FROM Account WHERE Id=: acc.Id];
+String s = v.Description; //results in sObject exception
+}
+
+catch(SObjectException e){
+    System.debug('exception type caught: ' + e.getTypeName());
+    System.debug('Message: ' + e.getMessage());
+    System.debug('Cause: ' + e.getCause());
+    System.debug('Line Number: ' + e.getLineNumber());
+    System.debug('Stack Trace: ' + e.getStackTraceString());
+}
+
+
+Account acc1 = new Account(Name = 'ABC Corp' , Description = 'THe biggest company');
+Account acc2 = new Account();
+Account acc3 = new Account();
+
+List<Account> accList = new List<Account>();
+accList.add(acc1);
+accList.add(acc2);
+accList.add(acc3);
+
+try{
+insert accList; 
+
+}
+catch(DmlException e){
+    Integer numOfErrors = e.getNumDml();
+    System.debug('getNuDml: ' + numOfErrors);
+    for (Integer i = 0; i < numOfErrors; i++) {
+        System.debug('getDmlfieldNames: ' + e.getDmlFieldNames(i));
+        System.debug('getDmlMessage: ' + e.getDmlMessage(i));
+        
+    }
+}
+
+AcctUtility.mainProcessing(); 
