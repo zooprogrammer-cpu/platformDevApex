@@ -257,4 +257,34 @@ for(Schema.ChildRelationship childRel : listofChildRel ){
     }
 }
 
+// get tabs associated with an app
+List<Schema.DescribeTabSetResult> tabSetDesc = Schema.describeTabs();
+for(Schema.DescribeTabSetResult tsr:tabSetDesc){
+    String appLabel = tsr.getLabel();
+    if(appLabel == 'Sales'){
+        List<Schema.DescribeTabResult> tabDescri = tsr.getTabs();
+        for (Schema.DescribeTabResult tab : tabDescri){
+            System.debug('Label: ' + tab.getLabel() );
+        } 
+    } 
+}
+
+//find all required fields of sObject
+Map<String, Schema.SObjectType> m= Schema.getGlobalDescribe();
+Schema.SObjectType s = m.get('Opportunity');
+Schema.DescribeSObjectResult descOpportunity = s.getDescribe();
+System.debug('Describe for Opportunity: ' + descOpportunity); 
+Map<String, Schema.SObjectField> fields = descOpportunity.fields.getMap(); 
+System.debug('Fields of the Opportunity: ' + fields );
+
+List<String> listRequiredFields = new List<String>(); 
+for (String f:fields.KeySet()){
+    Schema.DescribeFieldResult describeField = fields.get(f).getDescribe();
+    if (describeField.isCreateable() && !describeField.isNillable() && !describeField.isDefaultedOnCreate()){
+        listRequiredFields.add(f);    
+    }
+}
+
+System.debug('Required Fields for the Object: ' + listRequiredFields); 
+
 System.debug(TemperatureConverter.convertFahrenheitToCelsius(70));
