@@ -248,7 +248,13 @@ for (Schema.SObjectField fld : accFields.values()) {
     System.debug('Fields: ' + fld);
 }
 
-
-
+// get childRelationships of an Object
+Schema.DescribeSObjectResult describeResult= Account.SObjectType.getDescribe();
+List<Schema.ChildRelationship> listofChildRel = describeResult.getChildRelationships();
+for(Schema.ChildRelationship childRel : listofChildRel ){
+    if (childRel.getRelationshipName() != null){
+        System.debug(childRel.getRelationshipName());
+    }
+}
 
 System.debug(TemperatureConverter.convertFahrenheitToCelsius(70));
