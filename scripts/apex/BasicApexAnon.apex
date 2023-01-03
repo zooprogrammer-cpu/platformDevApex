@@ -221,4 +221,34 @@ catch(DmlException e){
 
 AcctUtility.mainProcessing(); 
 
+Map<Id, String> accountMap = new Map<Id,String>();
+
+for (Contact con : [SELECT Id, AccountId,Account.Name FROM Contact WHERE AccountId != NULL LIMIT 20]) {
+    accountMap.put(con.AccountId,con.Account.Name);
+}
+System.debug(accountMap);
+
+for (Id i : accountMap.keySet()) {
+    System.debug('Account ID: ' + i);
+}
+
+// Database Schema Class
+// getGlobalDescribe Method - Returns a List of all objects in the org. Also get the fields of the objects
+// 
+List<schema.SObjectType> gd = Schema.getGlobalDescribe().values();
+for (schema.SObjectType g : gd) {
+    System.debug('Object Name' + g.getDescribe().getName() + 'Fields=>' + g.getDescribe().fields.getMap().values());
+}
+
+// get fields of just Account Object
+
+Schema.DescribeSObjectResult accDesc = Account.sObjectType.getDescribe(); 
+Map<String, Schema.SObjectField> accFields = accDesc.fields.getMap(); 
+for (Schema.SObjectField fld : accFields.values()) {
+    System.debug('Fields: ' + fld);
+}
+
+
+
+
 System.debug(TemperatureConverter.convertFahrenheitToCelsius(70));
