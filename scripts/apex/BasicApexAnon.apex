@@ -220,3 +220,14 @@ catch(DmlException e){
 }
 
 AcctUtility.mainProcessing(); 
+
+Map<Id, String> accountMap = new Map<Id,String>();
+
+for (Contact con : [SELECT Id, AccountId,Account.Name FROM Contact WHERE AccountId != NULL LIMIT 20]) {
+    accountMap.put(con.AccountId,con.Account.Name);
+}
+System.debug(accountMap);
+
+for (Id i : accountMap.keySet()) {
+    System.debug('Account ID: ' + i);
+}
