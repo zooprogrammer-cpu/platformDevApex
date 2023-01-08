@@ -1,4 +1,11 @@
 public class HelloWorld {
+
+  final String greeting = 'Hello World';
+
+  public void printGreeting(){
+    System.debug(greeting);
+  }
+
   public void printMessage(String msg) {
     System.debug(msg);
   }

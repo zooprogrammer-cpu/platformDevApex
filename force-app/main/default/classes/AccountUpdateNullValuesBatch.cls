@@ -25,4 +25,5 @@ global class AccountUpdateNullValuesBatch implements Database.Batchable<sObject>
     global void finish (Database.BatchableContext BC){
         System.debug('Inside the finished method.') ;   
     }
+
 }

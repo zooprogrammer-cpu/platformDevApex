@@ -20,4 +20,3 @@ global class StatefulBatchApex implements Database.Batchable<sObject>, Database.
   
     }
 }
-

@@ -47,18 +47,18 @@ public with sharing class SoqlWithRelationship {
     return authors;
   }
 
-  public static List<Book__c> bookName() {
-    List<Author__c> authors = [
-      SELECT Id, Name, (SELECT Id, Name FROM Books__r)
-      FROM Author__c
-    ];
-    for (Author__c author : authors) {
-      System.debug(authors);
-      for (Book__c book : author.Books__r) {
-        System.debug('Book:'+ book);
-      }
-      return book;
-    }
-    // return author.Books__r;
-  }
+  // public static List<Book__c> bookName() {
+  //   List<Author__c> authors = [
+  //     SELECT Id, Name, (SELECT Id, Name FROM Books__r)
+  //     FROM Author__c
+  //   ];
+  //   for (Author__c author : authors) {
+  //     System.debug(authors);
+  //     for (Book__c book : author.Books__r) {
+  //       System.debug('Book:'+ book);
+  //     }
+  //     return book;
+  //   }
+  //   // return author.Books__r;
+  // }
 }
