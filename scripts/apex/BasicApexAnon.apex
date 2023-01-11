@@ -288,3 +288,6 @@ for (String f:fields.KeySet()){
 System.debug('Required Fields for the Object: ' + listRequiredFields); 
 
 System.debug(TemperatureConverter.convertFahrenheitToCelsius(70));
+
+
+CustomMetadataService.fetchDiscount('Platinum');

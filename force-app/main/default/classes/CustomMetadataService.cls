@@ -15,5 +15,10 @@ public with sharing class CustomMetadataService {
     }
 
     // find the discount of one specific support tier:
+
+    public static void fetchDiscount(String supportTier) {
+        Support_Tier__mdt singleTier = Support_Tier__mdt.getInstance(supportTier);
+        System.debug('Support Tier Name: ' + supportTier + 'Discount: ' + singleTier?.Default_Discount__c);
+    }
     
 }
