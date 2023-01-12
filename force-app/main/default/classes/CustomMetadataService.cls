@@ -19,6 +19,12 @@ public with sharing class CustomMetadataService {
     public static void fetchDiscount(String supportTier) {
         Support_Tier__mdt singleTier = Support_Tier__mdt.getInstance(supportTier);
         System.debug('Support Tier Name: ' + supportTier + 'Discount: ' + singleTier?.Default_Discount__c);
+        coolMethod(singleTier);
+    }
+
+    public static void coolMethod(Support_Tier__mdt val) {
+        System.debug('Cool Support Tier: ' + val); 
+        System.debug('Cool Support Tier Discount: ' + val.Default_Discount__c);   
     }
     
 }

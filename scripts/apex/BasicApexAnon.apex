@@ -290,4 +290,13 @@ System.debug('Required Fields for the Object: ' + listRequiredFields);
 System.debug(TemperatureConverter.convertFahrenheitToCelsius(70));
 
 
-CustomMetadataService.fetchDiscount('Platinum');
+CustomMetadataService.fetchDiscount('Gold');
+
+Map<String, String> colorCodes = new Map<String, String>();
+colorCodes.put('Red', 'F798798');
+colorCodes.put('Yellow', 'THUHUH');
+colorCodes.put('Green', 'YIUIU');
+
+Set<String> colorSet = new Set<String>();
+colorSet = colorCodes.keySet();
+System.debug(colorSet);
