@@ -300,3 +300,5 @@ colorCodes.put('Green', 'YIUIU');
 Set<String> colorSet = new Set<String>();
 colorSet = colorCodes.keySet();
 System.debug(colorSet);
+
+CustomMetadataService.getDiscountwithSOQL();
