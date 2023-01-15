@@ -22,9 +22,27 @@ public with sharing class CustomMetadataService {
         coolMethod(singleTier);
     }
 
+    // this method is being called by the fetchDiscount method
     public static void coolMethod(Support_Tier__mdt val) {
         System.debug('Cool Support Tier: ' + val); 
         System.debug('Cool Support Tier Discount: ' + val.Default_Discount__c);   
     }
+
+    // this method returns all of the Minimum Spending field values in all the records with a SOQL query
+    public static void getDiscountwithSOQL() {
+        Support_Tier__mdt [] minSpent = [SELECT Minimum_Spending__c FROM Support_Tier__mdt]; 
+        System.debug('The minimum spent values are: ' + minSpent);     
+    }
+
+    // This method instantiates a custom metadata record of typw Suppor_Tier__mdt
+    // and sets the developer name to input string. 
+    // The record is not inserted into the database, and would not be found by a SOQL query
+    public static Support_Tier__mdt getCustomMetadataRecord(String myName) {
+        Support_Tier__mdt supportTier = new Support_Tier__mdt();    
+        supportTier.DeveloperName = myName;
+        return supportTier; 
+    }
+
+
     
 }
