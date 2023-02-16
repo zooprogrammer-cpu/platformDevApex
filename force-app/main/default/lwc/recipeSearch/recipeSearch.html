@@ -1,7 +1,13 @@
 <template>
     <lightning-card title = "Search Recipe"> 
         <div class="slds-form-element__control slds-p-around_x-small">
-          <lightning-input label="Enter Name" name="input1"></lightning-input>
+            <lightning-input
+            name="enter-search"
+            type="search"
+            placeholder="Search recipe by ingredients"
+            variant="label-hidden"
+            class="ingredient-input"
+          ></lightning-input>        
         </div>
         <div>
             <lightning-button label="Search" onclick={fetchRecipesByIngredients} class="slds-m-left_x-small"></lightning-button>
