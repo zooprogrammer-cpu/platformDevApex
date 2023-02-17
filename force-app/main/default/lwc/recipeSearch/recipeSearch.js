@@ -1,9 +1,10 @@
-import { LightningElement } from 'lwc';
+import { LightningElement} from 'lwc';
 import getRandomRecipe from "@salesforce/apex/Spoonacular.getRandomRecipe";
 import getRecipeByIngredient from "@salesforce/apex/Spoonacular.getRecipeByIngredient";
 
 export default class RecipeSearch extends LightningElement {
     recipes =[]; 
+    searchKey = ''
     fetchRandomRecipe(){
         getRandomRecipe()
             .then((data)=>{
@@ -14,8 +15,12 @@ export default class RecipeSearch extends LightningElement {
             })
     }
 
+    handleKeyChange(event) {
+        this.searchKey = event.target.value;
+    }
+
     fetchRecipesByIngredients(){
-        const ingredients = this.template.querySelector(".ingredient-input").value;
+        const ingredients = this.searchKey;
         getRecipeByIngredient({ingredients})
             .then((data)=>{
                 this.recipes = JSON.parse(data);

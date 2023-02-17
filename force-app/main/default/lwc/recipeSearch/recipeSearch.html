@@ -2,11 +2,11 @@
     <lightning-card title = "Search Recipe"> 
         <div class="slds-form-element__control slds-p-around_x-small">
             <lightning-input
-            name="enter-search"
             type="search"
+            onchange = {handleKeyChange}
+            label="Search"
+            value = {searchKey}
             placeholder="Search recipe by ingredients"
-            variant="label-hidden"
-            class="ingredient-input"
           ></lightning-input>        
         </div>
         <div>
