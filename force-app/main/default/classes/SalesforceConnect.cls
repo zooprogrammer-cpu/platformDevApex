@@ -34,4 +34,30 @@ public with sharing class SalesforceConnect {
             System.debug('response' + response.getBody());
         }
       }
+      // method to send each new created case in Org A to Org B
+      @future (callout = true)
+      public static void sendCasesToSalesforceOrgB(Id caseId) {
+        Case caseToSend = [SELECT Id, Origin, Priority, Subject FROM Case WHERE Id=:caseId];
+        Map<String, String> caseMap = new Map<String, String>();
+        caseMap.put('subject', caseToSend.Subject);
+        caseMap.put('origin', caseToSend.Origin);
+        caseMap.put('priority', caseToSend.Priority);
+        
+        String jsonString = JSON.serialize(caseMap);
+        System.debug('jsonString:' + jsonString);
+
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(
+            'callout:SFDCB/services/apexrest/CasesTest'
+        );
+        request.setMethod('POST');
+        request.setHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.setBody(jsonString);
+        HttpResponse response = http.send(request);
+        System.debug('response code: ' + response.getStatusCode());
+        if (response.getStatusCode() == 200) {
+            System.debug('response' + response.getBody());
+        }
+      }
 }
