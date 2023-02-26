@@ -8,7 +8,6 @@ export default class Receipe extends LightningElement {
   @api time;
   @api summary;
   @api recipeId;
-  @api sourceUrl;
   @api
   set dishTypes(data) {
     this.dishList = data && data.join();
@@ -30,13 +29,11 @@ export default class Receipe extends LightningElement {
     getRecipe({ recipeId: this.recipeId })
       .then((data) => {
         const recipe = JSON.parse(data);
-        console.log('recipe data:', recipe);
         if (recipe) {
           this.image = recipe.image;
           this.price = recipe.pricePerServing;
           this.time = recipe.readyInMinutes;
           this.summary = recipe.summary;
-          this.sourceUrl = recipe.sourceUrl; 
           this.dishList = recipe.dishTypes && recipe.dishTypes.join();
           this.dietList = recipe.diets && recipe.diets.join();
         }
@@ -45,12 +42,6 @@ export default class Receipe extends LightningElement {
         console.error(error);
       });
   }
-
-  get hasDetails() {
-    return this.summary ? true : false;
-  }
-
-  fetchFullRecipe(){
 
   get hasDetails() {
     return this.summary ? true : false;
