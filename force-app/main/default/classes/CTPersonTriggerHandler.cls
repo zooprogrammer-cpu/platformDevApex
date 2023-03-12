@@ -24,4 +24,24 @@ public with sharing class CTPersonTriggerHandler {
       }
     }
   }
+
+  //After update operation for Person__c object
+  //need to use oldMap to check if the status field really updated or not
+  public static void afterUpdate(List<Person__c> newRecords,Map<Id, Person__c> oldRecordsMap) {
+    Set<Id> statusChange = new Set<Id>();
+    Set<Id> redStatus = new Set<Id>();
+    Set<Id> orangeStatus = new Set<Object>();
+    Set<Id> yellowStatus = new Set<Id>();
+    for (Person__c person : newRecords) {
+      // check if the status changed in the transaction
+      // if the new value is not equal to old value, then we will update the status date
+      if (person.Health_Status__c != oldRecordsMap.get(person.id).Health_Status__c) {
+        statusChange.add(person.Id);
+      }
+      if (person.Health_Status__c == 'Red' && oldRecordsMap.get(person.id).Health_Status__c != 'Red'){
+        redStatus.add(person.Id);
+
+      }
+    }
+  }
 }

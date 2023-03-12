@@ -73,11 +73,127 @@ public with sharing class CTPersonController {
       FROM Person__c
       GROUP BY Health_Status__c
     ]) {
-      //need to type cast the Health Status and total before adding to the map 
+      //need to type cast the Health Status and total before adding to the map
       String healthStatus = String.valueOf(ar.get('Health_Status__c'));
       Integer count = Integer.valueOf(ar.get('total'));
       healthCountMap.put(healthStatus, count);
     }
-    return healthCountMap; 
+    return healthCountMap;
+  }
+  //CT Person Challenge 10
+  //Method to return a list of Cohabitants for all the people who are in the personIds set
+  // and whose health status is Green or Yellow
+  public static Set<Id> getCohabitants(Set<Id> personIds) {
+    // Build list of health status to add which are Green and Yellow
+    List<String> healthStatuses = new List<String>{ 'Green', 'Yellow' };
+    List<People_Tracing__c> peopleTraces = [
+      SELECT Id
+      FROM People_Tracing__c
+      WHERE
+        (Person_1__c IN :personIds
+        OR Person_2__c IN :personIds)
+        AND Contact_Type__c = 'Cohabitants'
+        AND (Person_1__r.Health_Status__c IN :healthStatuses
+        OR Person_2__r.Health_Status__c IN :healthStatuses)
+    ];
+    // Make a unique set of cohabitants so that there are no duplicate cohabitants
+    // since a person can be stored as Person_1__c or Person_2__c
+    Set<Id> cohabitants = new Set<Id>();
+    for (People_Tracing__c pt : peopleTraces) {
+      if (!personIds.contains(pt.Person_1__c)) {
+        cohabitants.add(pt.Person_1__c);
+      }
+      if (!personIds.contains(pt.Person_2__c)) {
+        cohabitants.add(pt.Person_2__c);
+      }
+    }
+    return cohabitants;
+  }
+
+  //Method to return a list of Neighbours for all the people who are in the personIds set
+  public static Set<Id> getNeighbours(Set<Id> personIds) {
+    // Build list of health status to add which are Green
+    List<People_Tracing__c> peopleTraces = [
+      SELECT Id
+      FROM People_Tracing__c
+      WHERE
+        (Person_1__c IN :personIds
+        OR Person_2__c IN :personIds)
+        AND Contact_Type__c = 'Neighbours'
+        AND (Person_1__r.Health_Status__c = 'Green'
+        OR Person_2__r.Health_Status__c = 'Green')
+    ];
+    // Make a unique set of neighbors so that there are no duplicate neighbors
+    // since a person can be stored as Person_1__c or Person_2__c
+    Set<Id> neighbours = new Set<Id>();
+    for (People_Tracing__c pt : peopleTraces) {
+      if (!personIds.contains(pt.Person_1__c)) {
+        neighbours.add(pt.Person_1__c);
+      }
+      if (!personIds.contains(pt.Person_2__c)) {
+        neighbours.add(pt.Person_2__c);
+      }
+    }
+    return neighbours;
+  }
+
+  //Method to return a list of primary contacts for all the people who are in the personIds set
+  public static Set<Id> getPrimaryContact(Set<Id> personIds) {
+    // Build list of health status to add which are Green and Yellow
+    List<String> healthStatuses = new List<String>{ 'Green', 'Yellow' };
+
+    List<People_Tracing__c> peopleTraces = [
+      SELECT Id
+      FROM People_Tracing__c
+      WHERE
+        (Person_1__c IN :personIds
+        OR Person_2__c IN :personIds)
+        AND Contact_Type__c = 'Other'
+        AND Contact_Date__c = LAST_N_DAYS:10
+        AND (Person_1__r.Health_Status__c IN :healthStatuses
+        OR Person_2__r.Health_Status__c IN :healthStatuses)
+    ];
+    // Make a unique set of primaryContacts so that there are no duplicate primaryContacts
+    // since a person can be stored as Person_1__c or Person_2__c
+    Set<Id> primaryContacts = new Set<Id>();
+    for (People_Tracing__c pt : peopleTraces) {
+      if (!personIds.contains(pt.Person_1__c)) {
+        primaryContacts.add(pt.Person_1__c);
+      }
+      if (!personIds.contains(pt.Person_2__c)) {
+        primaryContacts.add(pt.Person_2__c);
+      }
+    }
+    return primaryContacts;
+  }
+
+  //Method to return a list of secondary contacts for all the people who are in the personIds set
+  public static Set<Id> getSecondaryContacts(Set<Id> primaryContactsIds) {
+    // Build list of health status to add which are Green and Yellow
+    List<String> healthStatuses = new List<String>{ 'Green', 'Yellow' };
+
+    List<People_Tracing__c> peopleTraces = [
+      SELECT Id
+      FROM People_Tracing__c
+      WHERE
+        (Person_1__c IN :primaryContactsIds
+        OR Person_2__c IN :primaryContactsIds)
+        AND Contact_Type__c = 'Other'
+        AND Contact_Date__c = LAST_N_DAYS:10
+        AND (Person_1__r.Health_Status__c IN :healthStatuses
+        OR Person_2__r.Health_Status__c IN :healthStatuses)
+    ];
+    // Make a unique set of secondaryContacts so that there are no duplicate secondaryContacts
+    // since a person can be stored as Person_1__c or Person_2__c
+    Set<Id> secondaryContacts = new Set<Id>();
+    for (People_Tracing__c pt : peopleTraces) {
+      if (!primaryContactsIds.contains(pt.Person_1__c)) {
+        secondaryContacts.add(pt.Person_1__c);
+      }
+      if (!primaryContactsIds.contains(pt.Person_2__c)) {
+        secondaryContacts.add(pt.Person_2__c);
+      }
+    }
+    return secondaryContacts;
   }
 }
