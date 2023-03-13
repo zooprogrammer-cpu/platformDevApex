@@ -5,5 +5,7 @@
     "**/.sfdx": true
   },
   "salesforcedx-vscode-core.retrieve-test-code-coverage": true,
-  "salesforcedx-vscode-apex.java.home": "C:\\\\Users\\\\ashba\\\\AppData\\\\Local\\\\Programs\\\\Eclipse Adoptium\\\\jdk-17.0.6.10-hotspot"
+  "salesforcedx-vscode-apex.java.home": "C:\\\\Program Files\\\\Eclipse Adoptium\\\\jdk-17.0.6.10-hotspot",
+  "java.jdt.ls.java.home": "",
+  "xml.java.home": ""
 }

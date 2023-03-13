@@ -30,7 +30,7 @@ public with sharing class CTPersonTriggerHandler {
   public static void afterUpdate(List<Person__c> newRecords,Map<Id, Person__c> oldRecordsMap) {
     Set<Id> statusChange = new Set<Id>();
     Set<Id> redStatus = new Set<Id>();
-    Set<Id> orangeStatus = new Set<Object>();
+    Set<Id> orangeStatus = new Set<Id>();
     Set<Id> yellowStatus = new Set<Id>();
     for (Person__c person : newRecords) {
       // check if the status changed in the transaction
@@ -43,5 +43,18 @@ public with sharing class CTPersonTriggerHandler {
 
       }
     }
+    Set<Id> alreadyProcessed = new Set<Id>();
+    alreadyProcessed.addAll(redStatus); 
+    // If a person's Health Status updates to Red, mark all "Cohabitants" and "Primary Contacts" Orange.
+    orangeStatus.addAll(CTPersonController.getCohabitants(redStatus, alreadyProcessed));
+    Set<Id> primaryContacts = new Set<Id>();
+    orangeStatus.addAll(primaryContacts);
+    primaryContacts.addAll(CTPersonController.getPrimaryContact(redStatus, alreadyProcessed));
+    
+    // If a person's Health Status updates to Red, mark all "Neigbors" and "Secondary Contacts" Yellow.
+    yellowStatus.addAll(CTPersonController.getNeighbours(redStatus, alreadyProcessed));
+    // In this case, we need to pass the output of the getPrimaryContact
+    yellowStatus.addAll(CTPersonController.getSecondaryContacts(primaryContacts, alreadyProcessed));
+
   }
 }
