@@ -32,6 +32,7 @@ public with sharing class CTPersonTriggerHandler {
     Set<Id> redStatus = new Set<Id>();
     Set<Id> orangeStatus = new Set<Id>();
     Set<Id> yellowStatus = new Set<Id>();
+    List<Person__c> personToUpdate = new List<Person__c>();
     for (Person__c person : newRecords) {
       // check if the status changed in the transaction
       // if the new value is not equal to old value, then we will update the status date
@@ -55,6 +56,16 @@ public with sharing class CTPersonTriggerHandler {
     yellowStatus.addAll(CTPersonController.getNeighbours(redStatus, alreadyProcessed));
     // In this case, we need to pass the output of the getPrimaryContact
     yellowStatus.addAll(CTPersonController.getSecondaryContacts(primaryContacts, alreadyProcessed));
+    // Update the Health Status of the Person
+    for (Id pid : orangeStatus) {
+      personToUpdate.add(new Person__c(Id =pid, Health_Status__c = 'Orange'));
+    }
+    for (Id pid : yellowStatus) {
+      personToUpdate.add(new Person__c(Id =pid, Health_Status__c = 'Yellow'));
+    }
+    if (personToUpdate.size() > 0){
+      update personToUpdate; 
+    }
 
   }
 }
