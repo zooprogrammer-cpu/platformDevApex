@@ -13,5 +13,8 @@ trigger CTPersonTrigger on Person__c(
     when BEFORE_UPDATE {
       CTPersonTriggerHandler.beforeUpdate(Trigger.new, Trigger.oldMap);
     }
+    when AFTER_UPDATE {
+      CTPersonTriggerHandler.afterUpdate(Trigger.new, Trigger.oldMap);
+    }
   }
 }

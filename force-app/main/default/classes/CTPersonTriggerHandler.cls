@@ -24,4 +24,37 @@ public with sharing class CTPersonTriggerHandler {
       }
     }
   }
+
+  //After update operation for Person__c object
+  //need to use oldMap to check if the status field really updated or not
+  public static void afterUpdate(List<Person__c> newRecords,Map<Id, Person__c> oldRecordsMap) {
+    Set<Id> statusChange = new Set<Id>();
+    Set<Id> redStatus = new Set<Id>();
+    Set<Id> orangeStatus = new Set<Id>();
+    Set<Id> yellowStatus = new Set<Id>();
+    for (Person__c person : newRecords) {
+      // check if the status changed in the transaction
+      // if the new value is not equal to old value, then we will update the status date
+      if (person.Health_Status__c != oldRecordsMap.get(person.id).Health_Status__c) {
+        statusChange.add(person.Id);
+      }
+      if (person.Health_Status__c == 'Red' && oldRecordsMap.get(person.id).Health_Status__c != 'Red'){
+        redStatus.add(person.Id);
+
+      }
+    }
+    Set<Id> alreadyProcessed = new Set<Id>();
+    alreadyProcessed.addAll(redStatus); 
+    // If a person's Health Status updates to Red, mark all "Cohabitants" and "Primary Contacts" Orange.
+    orangeStatus.addAll(CTPersonController.getCohabitants(redStatus, alreadyProcessed));
+    Set<Id> primaryContacts = new Set<Id>();
+    orangeStatus.addAll(primaryContacts);
+    primaryContacts.addAll(CTPersonController.getPrimaryContact(redStatus, alreadyProcessed));
+    
+    // If a person's Health Status updates to Red, mark all "Neigbors" and "Secondary Contacts" Yellow.
+    yellowStatus.addAll(CTPersonController.getNeighbours(redStatus, alreadyProcessed));
+    // In this case, we need to pass the output of the getPrimaryContact
+    yellowStatus.addAll(CTPersonController.getSecondaryContacts(primaryContacts, alreadyProcessed));
+
+  }
 }
