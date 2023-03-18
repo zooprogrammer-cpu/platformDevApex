@@ -8,7 +8,7 @@ trigger CTLocationTrigger on Location__c (before insert, after insert, before up
 
         }
         when AFTER_UPDATE {
-            
+            CTLocationTriggerHandler.afterUpdate(Trigger.new, Trigger.oldMap);
         }
     }
 
