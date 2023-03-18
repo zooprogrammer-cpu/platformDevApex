@@ -29,13 +29,8 @@ public with sharing class CTLocationTracingController {
 
   //Get all vistor ids for locations
 
-  public static List<Location_Tracing__c> getLocationsByLocationIds(
-    Set<Id> locationIds
-  ) {
-    return [
-      SELECT Id, Person__c, Location__c, Visit_Date__c
-      FROM Location_Tracing__c
-      WHERE
+  public static List<Location_Tracing__c> getLocationsByLocationIds(Set<Id> locationIds) {
+    return [SELECT Id, Person__c, Location__c, Visit_Date__c FROM Location_Tracing__c WHERE
         Location__c IN :locationIds
         AND Person__r.Health_Status__c = 'Green'
         AND Visit_Date__c < LAST_N_DAYS:10
