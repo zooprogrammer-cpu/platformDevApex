@@ -23,7 +23,7 @@ public with sharing class CTPersonTriggerHandler {
       }
   }
 
-  // Before update operation for Person__c object
+  // After update operation for Person__c object
   public static void afterUpdate(List<Person__c> newRecords, Map<Id, Person__c> oldRecordsMap){
       Set<Id> statusChange = new Set<Id>();
       Set<Id> redStatus = new Set<Id>();
